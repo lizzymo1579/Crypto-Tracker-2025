@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Crypto Débutant 2025</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 30px;
+            background: #f8fafc;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 5px solid;
+        }
+        
+        .stat-card.invested {
+            border-left-color: #3b82f6;
+        }
+        
+        .stat-card.withdrawn {
+            border-left-color: #10b981;
+        }
+        
+        .stat-card.profit {
+            border-left-color: #8b5cf6;
+        }
+        
+        .stat-card h3 {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f1f5f9;
+            padding: 0 30px;
+            gap: 5px;
+        }
+        
+        .tab {
+            padding: 15px 25px;
+            background: transparent;
+            border: none;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background: white;
+            color: #3b82f6;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .tab:hover:not(.active) {
+            background: rgba(255,255,255,0.5);
+        }
+        
+        .content {
+            padding: 30px;
+            min-height: 400px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        th {
+            background: #f1f5f9;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        tr:hover {
+            background: #f8fafc;
+        }
+        
+        .crypto-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .crypto-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+        
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        
+        .status-en-cours {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        
+        .status-planifie {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+        
+        .profit-high {
+            color: #059669;
+            font-weight: 700;
+        }
+        
+        .profit-medium {
+            color: #0891b2;
+            font-weight: 600;
+        }
+        
+        .profit-low {
+            color: #7c3aed;
+        }
+        
+        .action-badge {
+            padding: 8px 15px;
+            background: #dbeafe;
+            color: #1d4ed8;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .input-field {
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            width: 100%;
+            max-width: 120px;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .strategy-list {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .strategy-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .strategy-item:hover {
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .strategy-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .strategy-content h3 {
+            color: #1e293b;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .strategy-content p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        .export-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            float: right;
+            margin: 20px 30px;
+        }
+        
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        .alert {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #92400e;
+        }
+        
+        .alert-icon {
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+                padding: 0 20px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .table-container {
+                font-size: 0.9rem;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Plan Crypto Débutant 2025</h1>
+            <p>Suivi d'investissement mensuel et stratégie progressive</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card invested">
+                <h3>Total Investi</h3>
+                <div class="value" id="totalInvesti">800 AED</div>
+            </div>
+            <div class="stat-card withdrawn">
+                <h3>Total Retiré</h3>
+                <div class="value" id="totalRetire">0 AED</div>
+            </div>
+            <div class="stat-card profit">
+                <h3>Bénéfice Net</h3>
+                <div class="value" id="beneficeNet">0 AED</div>
+            </div>
+        </div>
+        
+        <button class="export-btn" onclick="exportToCSV()">📊 Exporter CSV</button>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('suivi')">📅 Suivi Mensuel</button>
+            <button class="tab" onclick="showTab('strategie')">🎯 Stratégie</button>
+            <button class="tab" onclick="showTab('revente')">📈 Plan de Revente</button>
+        </div>
+        
+        <div class="content">
+            <!-- Suivi Mensuel -->
+            <div id="suivi" class="tab-content active">
+                <div class="alert">
+                    <span class="alert-icon">⚠️</span>
+                    <strong>Conseil :</strong> Investissez régulièrement la même somme chaque mois pour lisser les variations de prix (DCA - Dollar Cost Averaging).
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mois</th>
+                                <th>Montant (AED)</th>
+                                <th>Crypto Achetée</th>
+                                <th>Objectif</th>
+                                <th>Retiré (AED)</th>
+                                <th>Statut</th>
+                                <th>Commentaires</th>
+                            </tr>
+                        </thead>
+                        <tbody id="suiviTableBody">
+                            <!-- Contenu généré par JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Stratégie -->
+            <div id="strategie" class="tab-content">
+                <div class="alert">
+                    <span class="alert-icon">🎯</span>
+                    <strong>Stratégie Progressive :</strong> Suivez ces étapes dans l'ordre pour construire votre portefeuille crypto de manière sécurisée.
+                </div>
+                
+                <div class="strategy-list">
+                    <div class="strategy-item">
+                        <div class="strategy-number">1</div>
+                        <div class="strategy-content">
+                            <h3>Choisir 3 à 5 cryptos</h3>
+                            <p>Utiliser la watchlist débutant 2025 comme base. Diversifiez entre des cryptos établies (BTC, ETH) et des altcoins prometteurs.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="strategy-item">
+                        <div class="strategy-number">2</div>
+                        <div class="strategy-content">
+                            <h3>Investir une somme fixe chaque mois</h3>
+                            <p>Exemple : 100 AED/mois. Cette méthode (DCA) réduit l'impact de la volatilité sur vos achats.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="strategy-item">
+                        <div class="strategy-number">3</div>
+                        <div class="strategy-content">
+                            <h3>Utiliser un portefeuille sécurisé (Metamask)</h3>
+                            <p>Conserver vos cryptos hors de Binance si possible. "Not your keys, not your crypto".</p>
+                        </div>
+                    </div>
+                    
+                    <div class="strategy-item">
+                        <div class="strategy-number">4</div>
+                        <div class="strategy-content">
+                            <h3>Suivre les prix tous les dimanches</h3>
+                            <p>Notez l'évolution chaque semaine dans le tableau. Évitez de checker les prix quotidiennement.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="strategy-item">
+                        <div class="strategy-number">5</div>
+                        <div class="strategy-content">
+                            <h3>Revendre quand l'objectif est atteint</h3>
+                            <p>Exemple : si une crypto fait +50%, revendre 50% pour sécuriser les profits.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="strategy-item">
+                        <div class="strategy-number">6</div>
+                        <div class="strategy-content">
+                            <h3>Réinvestir les profits</h3>
+                            <p>Répartir dans des cryptos stables ou nouvelles opportunités pour diversifier le portefeuille.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Plan de Revente -->
+            <div id="revente" class="tab-content">
+                <div class="alert">
+                    <span class="alert-icon">📈</span>
+                    <strong>Plan de Revente Automatisé :</strong> Définissez vos objectifs de prix à l'avance pour éviter les décisions émotionnelles.
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Crypto</th>
+                                <th>Prix d'Achat (AED)</th>
+                                <th>Prix Objectif (AED)</th>
+                                <th>Potentiel</th>
+                                <th>Action Recommandée</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reventeTableBody">
+                            <!-- Contenu généré par JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div style="background: #f8fafc; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <h4 style="color: #1e293b; margin-bottom: 15px;">Règles de Revente :</h4>
+                    <ul style="color: #64748b; line-height: 1.8;">
+                        <li><strong>Revendre 50%</strong> : Garder une position tout en sécurisant des profits</li>
+                        <li><strong>Revendre 100%</strong> : Sortie complète pour les gains exceptionnels</li>
+                        <li><strong>Conserver</strong> : Garder pour la stabilité (stablecoins)</li>
+                        <li><strong>Réinvestir</strong> : Utiliser les profits pour diversifier vers d'autres cryptos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Données
+        let suiviData = [
+            { mois: "Juin", montantInvesti: 200, cryptoAchetee: "Diversifiée", objectifRevente: "+50%", montantRetire: 0, commentaires: "Premier investissement", status: "en_cours" },
+            { mois: "Juillet", montantInvesti: 100, cryptoAchetee: "ETH + MATIC", objectifRevente: "+40%", montantRetire: 0, commentaires: "", status: "en_cours" },
+            { mois: "Août", montantInvesti: 100, cryptoAchetee: "SOL + RNDR", objectifRevente: "+30%", montantRetire: 0, commentaires: "", status: "planifie" },
+            { mois: "Septembre", montantInvesti: 100, cryptoAchetee: "USDT", objectifRevente: "Stable", montantRetire: 0, commentaires: "Placement sécurisé", status: "planifie" },
+            { mois: "Octobre", montantInvesti: 100, cryptoAchetee: "BNB + SUI", objectifRevente: "+60%", montantRetire: 0, commentaires: "", status: "planifie" },
+            { mois: "Novembre", montantInvesti: 100, cryptoAchetee: "TURBO + JUP", objectifRevente: "+100%", montantRetire: 0, commentaires: "", status: "planifie" },
+            { mois: "Décembre", montantInvesti: 100, cryptoAchetee: "MATIC + ZETA", objectifRevente: "+30%", montantRetire: 0, commentaires: "", status: "planifie" }
+        ];
+
+        let reventeData = [
+            { crypto: "USDT", prixAchat: 3.67, objectifPrix: 3.67, actionAPrix: "Conserver", potentiel: "0%" },
+            { crypto: "BNB", prixAchat: 1100, objectifPrix: 1600, actionAPrix: "Revendre 50%", potentiel: "+45%" },
+            { crypto: "ETH", prixAchat: 11000, objectifPrix: 16000, actionAPrix: "Revendre 50%", potentiel: "+45%" },
+            { crypto: "SOL", prixAchat: 500, objectifPrix: 750, actionAPrix: "Revendre 40%", potentiel: "+50%" },
+            { crypto: "MATIC", prixAchat: 3.5, objectifPrix: 5.5, actionAPrix: "Revendre 50%", potentiel: "+57%" },
+            { crypto: "AVAX", prixAchat: 100, objectifPrix: 150, actionAPrix: "Revendre 40%", potentiel: "+50%" },
+            { crypto: "RNDR", prixAchat: 10, objectifPrix: 18, actionAPrix: "Revendre 70%", potentiel: "+80%" },
+            { crypto: "TURBO", prixAchat: 0.005, objectifPrix: 0.015, actionAPrix: "Revendre 100%", potentiel: "+200%" },
+            { crypto: "JUP", prixAchat: 2, objectifPrix: 4, actionAPrix: "Revendre 80%", potentiel: "+100%" },
+            { crypto: "SUI", prixAchat: 4, objectifPrix: 8, actionAPrix: "Revendre 50%", potentiel: "+100%" },
+            { crypto: "ZETA", prixAchat: 5, objectifPrix: 10, actionAPrix: "Revendre 50%", potentiel: "+100%" }
+        ];
+
+        // Fonctions
+        function showTab(tabName) {
+            // Cacher tous les contenus
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Désactiver tous les tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Activer le tab sélectionné
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function updateStats() {
+            const totalInvesti = suiviData.reduce((sum, item) => sum + item.montantInvesti, 0);
+            const totalRetire = suiviData.reduce((sum, item) => sum + item.montantRetire, 0);
+            const beneficeNet = totalRetire - totalInvesti;
+            
+            document.getElementById('totalInvesti').textContent = totalInvesti + ' AED';
+            document.getElementById('totalRetire').textContent = totalRetire + ' AED';
+            document.getElementById('beneficeNet').textContent = beneficeNet + ' AED';
+        }
+
+        function renderSuiviTable() {
+            const tbody = document.getElementById('suiviTableBody');
+            tbody.innerHTML = '';
+            
+            suiviData.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${item.mois}</strong></td>
+                    <td><input type="number" value="${item.montantInvesti}" class="input-field" onchange="updateSuivi(${index}, 'montantInvesti', this.value)"></td>
+                    <td><input type="text" value="${item.cryptoAchetee}" class="input-field" style="max-width: 150px" onchange="updateSuivi(${index}, 'cryptoAchetee', this.value)"></td>
+                    <td><strong style="color: #059669">${item.objectifRevente}</strong></td>
+                    <td><input type="number" value="${item.montantRetire}" class="input-field" onchange="updateSuivi(${index}, 'montantRetire', this.value)"></td>
+                    <td><span class="status-badge status-${item.status}">${item.status === 'en_cours' ? 'En cours' : 'Planifié'}</span></td>
+                    <td><input type="text" value="${item.commentaires}" class="input-field" style="max-width: 200px" onchange="updateSuivi(${index}, 'commentaires', this.value)"></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function renderReventeTable() {
+            const tbody = document.getElementById('reventeTableBody');
+            tbody.innerHTML = '';
+            
+            reventeData.forEach(item => {
+                const row = document.createElement('tr');
+                const potentielValue = parseInt(item.potentiel.replace('%', '').replace('+', ''));
+                let potentielClass = 'profit-low';
+                if (potentielValue >= 100) potentielClass = 'profit-high';
+                else if (potentielValue >= 50) potentielClass = 'profit-medium';
+                
+                row.innerHTML = `
+                    <td>
+                        <div class="crypto-cell">
+                            <div class="crypto-icon">${item.crypto.substring(0, 2)}</div>
+                            <strong>${item.crypto}</strong>
+                        </div>
+                    </td>
+                    <td style="text-align: center">${item.prixAchat}</td>
+                    <td style="text-align: center; color: #059669; font-weight: 600">${item.objectifPrix}</td>
+                    <td style="text-align: center" class="${potentielClass}">${item.potentiel}</td>
+                    <td><span class="action-badge">${item.actionAPrix}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function updateSuivi(index, field, value) {
+            if (field === 'montantInvesti' || field === 'montantRetire') {
+                suiviData[index][field] = parseFloat(value) || 0;
+            } else {
+                suiviData[index][field] = value;
+            }
+            updateStats();
+        }
+
+        function exportToCSV() {
+            const csvContent = "Mois,Montant Investi (AED),Crypto Achetée,Objectif de Revente,Montant Retiré,Commentaires\n" +
+                suiviData.map(row => 
+                    `${row.mois},${row.montantInvesti},${row.cryptoAchetee},${row.objectifRevente},${row.montantRetire},${row.commentaires}`
+                ).join("\n");
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'plan_crypto_debutant_2025.csv';
+            a.click();
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            renderSuiviTable();
+            renderReventeTable();
+        });
+    </script>
+</body>
+</html>
